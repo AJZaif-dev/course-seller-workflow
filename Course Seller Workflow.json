@@ -1,0 +1,1050 @@
+{
+  "name": "Course Seller Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "732c5bcd-baf5-41ec-a0ee-d85513c7ab4c",
+              "name": "Full_Name",
+              "value": "={{ $('Form').item.json.body.data.fields[0].value }}",
+              "type": "string"
+            },
+            {
+              "id": "fd35d893-a3ac-4574-9164-53dc1b5b8a16",
+              "name": "Valid_Email",
+              "value": "={{ $('Form').item.json.body.data.fields[1].value }}",
+              "type": "string"
+            },
+            {
+              "id": "f0e952a9-1238-420c-9a31-d0957d687afa",
+              "name": "Valid_Phone_No",
+              "value": "={{ $('Form').item.json.body.data.fields[2].value }}",
+              "type": "string"
+            },
+            {
+              "id": "e026fe71-6696-40cf-8925-1714071c3efe",
+              "name": "Course_Selected",
+              "value": "={{ $json.Course_Selected }}",
+              "type": "string"
+            },
+            {
+              "id": "69b786eb-e467-4236-ab59-38f643716f3c",
+              "name": "Date",
+              "value": "={{ $now.format('dd.MM.yy') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -224,
+        288
+      ],
+      "id": "0ab4ca47-7058-4b2a-991f-bf3ade60499d",
+      "name": "Formatting"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Valid_Email }}",
+        "subject": "=Thank You for selecting  {{ $json.Course_Selected }}",
+        "message": "=<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Welcome to the Course</title>\n    <style>\n        body {\n            margin: 0;\n            padding: 0;\n            background-color: #1a1917;\n            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n            color: #DFDFDE;\n            -webkit-font-smoothing: antialiased;\n        }\n        .wrapper {\n            width: 100%;\n            table-layout: fixed;\n            background-color: #1a1917;\n            padding-bottom: 60px;\n        }\n        .main {\n            background-color: #1a1917;\n            margin: 0 auto;\n            width: 100%;\n            max-width: 600px;\n            border-spacing: 0;\n            color: #DFDFDE;\n        }\n        .content {\n            padding: 40px 20px;\n            text-align: center;\n        }\n        h1 {\n            font-size: 28px;\n            color: #ffffff;\n            margin-bottom: 20px;\n        }\n        p {\n            font-size: 16px;\n            line-height: 1.5;\n            margin-bottom: 25px;\n        }\n        .course-name {\n            color: #15fdf6;\n            font-weight: bold;\n        }\n        .button-container {\n            margin: 30px 0;\n        }\n        .btn {\n            background-color: #15fdf6;\n            color: #1a1917;\n            text-decoration: none;\n            padding: 15px 35px;\n            font-weight: bold;\n            border-radius: 4px;\n            display: inline-block;\n        }\n        .footer {\n            font-size: 12px;\n            color: #666666;\n            text-align: center;\n            padding: 20px;\n        }\n    </style>\n</head>\n<body>\n    <center class=\"wrapper\">\n        <table class=\"main\" width=\"100%\">\n            <tr>\n                <td class=\"content\">\n                    <h1>Welcome to the Journey!</h1>\n                    <p>Hi there,</p>\n                    <p>Thank you for enrolling in <span class=\"course-name\">{{ $json.Course_Selected }}</span>. We are excited to help you reach your goals!</p>\n                    <p>Get ready! Your class is scheduled to start exactly <strong>30 days</strong> from today. We'll send you more details and access links as we get closer to the launch date.</p>\n                    \n                    <div class=\"button-container\">\n                        <a href=\"#\" class=\"btn\">View Dashboard</a>\n                    </div>\n\n                    <p style=\"font-size: 14px; color: #888;\">If you have any questions, simply reply to this email.</p>\n                </td>\n            </tr>\n            <tr>\n                <td class=\"footer\">\n                    &copy; 2024 Your Academy. All rights reserved.\n                </td>\n            </tr>\n        </table>\n    </center>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Course"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "efc7357e-668e-467e-95bf-0f326cc080e9",
+      "name": "Welcome Email",
+      "webhookId": "93c9df41-20c4-48ea-8e00-906489779f39"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Fsqc9GmoZbxuWC_9KYMnWaDam5jzTyvuScqy_Hx_Njc",
+          "mode": "list",
+          "cachedResultName": "Course Enrollment",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Fsqc9GmoZbxuWC_9KYMnWaDam5jzTyvuScqy_Hx_Njc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Semester 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Fsqc9GmoZbxuWC_9KYMnWaDam5jzTyvuScqy_Hx_Njc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $json.Date }}",
+            "Full Name": "={{ $json.Full_Name }}",
+            "Valid Email": "={{ $json.Valid_Email }}",
+            "Valid Phone No.": "={{ $json.Valid_Phone_No }}",
+            "Course Selected": "={{ $json.Course_Selected }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Full Name",
+              "displayName": "Full Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Valid Email",
+              "displayName": "Valid Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Valid Phone No.",
+              "displayName": "Valid Phone No.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Course Selected",
+              "displayName": "Course Selected",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        0,
+        192
+      ],
+      "id": "0381ceda-c8a8-49e2-ac6d-6b2bb6ac9934",
+      "name": "Data Saved"
+    },
+    {
+      "parameters": {
+        "chatId": "6015704583",
+        "text": "=New Enrollment Info.\n\nStudent Name: {{ $json.Full_Name }}\n\nPhone No.: {{ $json.Valid_Phone_No }}\n\nEmail: {{ $json.Valid_Email }}\n\nCourse Selected: {{ $json.Course_Selected }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        384
+      ],
+      "id": "f5cb5a7c-367c-4513-82fd-38d451de7962",
+      "name": "Admin Notified",
+      "webhookId": "12836e8e-1ee9-43bd-9856-c6476a3bc03b"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Valid_Email }}",
+        "subject": "Your Exam is in 5 Days",
+        "message": "=<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Exam Reminder</title>\n    <style>\n        body {\n            margin: 0;\n            padding: 0;\n            background-color: #1a1917;\n            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n            color: #DFDFDE;\n            -webkit-font-smoothing: antialiased;\n        }\n        .wrapper {\n            width: 100%;\n            table-layout: fixed;\n            background-color: #1a1917;\n            padding-bottom: 60px;\n        }\n        .main {\n            background-color: #1a1917;\n            margin: 0 auto;\n            width: 100%;\n            max-width: 600px;\n            border-spacing: 0;\n            color: #DFDFDE;\n        }\n        .content {\n            padding: 40px 20px;\n            text-align: center;\n        }\n        .header-accent {\n            color: #15fdf6;\n            font-size: 14px;\n            letter-spacing: 2px;\n            text-transform: uppercase;\n            margin-bottom: 10px;\n            display: block;\n        }\n        h1 {\n            font-size: 28px;\n            color: #ffffff;\n            margin-top: 0;\n            margin-bottom: 20px;\n        }\n        .countdown-box {\n            background-color: #242321;\n            border: 1px solid #15fdf6;\n            padding: 20px;\n            margin: 25px 0;\n            border-radius: 8px;\n        }\n        .days-left {\n            font-size: 48px;\n            font-weight: bold;\n            color: #15fdf6;\n            display: block;\n            line-height: 1;\n        }\n        p {\n            font-size: 16px;\n            line-height: 1.6;\n            margin-bottom: 25px;\n        }\n        .course-name {\n            color: #15fdf6;\n            font-weight: bold;\n        }\n        .button-container {\n            margin: 30px 0;\n        }\n        .btn {\n            background-color: #15fdf6;\n            color: #1a1917;\n            text-decoration: none;\n            padding: 15px 35px;\n            font-weight: bold;\n            border-radius: 4px;\n            display: inline-block;\n        }\n        .footer {\n            font-size: 12px;\n            color: #666666;\n            text-align: center;\n            padding: 20px;\n        }\n    </style>\n</head>\n<body>\n    <center class=\"wrapper\">\n        <table class=\"main\" width=\"100%\">\n            <tr>\n                <td class=\"content\">\n                    <span class=\"header-accent\">Final Countdown</span>\n                    <h1>Exam Heads-Up!</h1>\n                    \n                    <p>Time has flown by! We are checking in to remind you that your entrance exam for <span class=\"course-name\">{{ $json.Course_Selected }}</span> is fast approaching.</p>\n                    \n                    <div class=\"countdown-box\">\n                        <span class=\"days-left\">05</span>\n                        <span style=\"color: #DFDFDE; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;\">Days to go</span>\n                    </div>\n\n                    <p>Your preparation window is closing. Now is the perfect time to review your materials and ensure your setup is ready for the big day.</p>\n                    \n                    <div class=\"button-container\">\n                        <a href=\"#\" class=\"btn\">Access Study Materials</a>\n                    </div>\n\n                    <p style=\"font-size: 14px; color: #888;\">The exam portal will open automatically in 5 days. Good luck!</p>\n                </td>\n            </tr>\n            <tr>\n                <td class=\"footer\">\n                    &copy; 2026 Your Academy. All rights reserved.<br>\n                    Sent 25 days post-enrollment.\n                </td>\n            </tr>\n        </table>\n    </center>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Course"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        576
+      ],
+      "id": "dbcf7fc8-43e4-403f-9336-842b6849bf59",
+      "name": "Reminder",
+      "webhookId": "f3dda797-e77a-4b3e-a454-6b0e64321c5e"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        576
+      ],
+      "id": "b0d5597a-9a82-4537-8ca9-a2cc759a9367",
+      "name": "25 Days Wait",
+      "webhookId": "f9d836b3-e3c0-47db-8daa-68acdb21cfbb",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        576
+      ],
+      "id": "b8d40f32-2bc7-4c3d-9be0-1ac485d14688",
+      "name": "5 Days Wait",
+      "webhookId": "1de8328b-5b19-4a61-a4ea-65cf00fbcef2",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('25 Days Wait').item.json.Valid_Email }}",
+        "subject": "Your Exam Link is Here",
+        "message": "=<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Exam Day - Good Luck</title>\n    <style>\n        body {\n            margin: 0;\n            padding: 0;\n            background-color: #1a1917;\n            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n            color: #DFDFDE;\n            -webkit-font-smoothing: antialiased;\n        }\n        .wrapper {\n            width: 100%;\n            table-layout: fixed;\n            background-color: #1a1917;\n            padding-bottom: 60px;\n        }\n        .main {\n            background-color: #1a1917;\n            margin: 0 auto;\n            width: 100%;\n            max-width: 600px;\n            border-spacing: 0;\n            color: #DFDFDE;\n        }\n        .content {\n            padding: 40px 20px;\n            text-align: center;\n        }\n        .status-badge {\n            display: inline-block;\n            background-color: #15fdf6;\n            color: #1a1917;\n            padding: 5px 15px;\n            font-size: 12px;\n            font-weight: bold;\n            text-transform: uppercase;\n            border-radius: 20px;\n            margin-bottom: 20px;\n        }\n        h1 {\n            font-size: 32px;\n            color: #ffffff;\n            margin-top: 0;\n            margin-bottom: 20px;\n        }\n        p {\n            font-size: 16px;\n            line-height: 1.6;\n            margin-bottom: 25px;\n        }\n        .course-name {\n            color: #15fdf6;\n            font-weight: bold;\n        }\n        .instructions-box {\n            text-align: left;\n            background-color: #242321;\n            padding: 25px;\n            border-radius: 8px;\n            margin-bottom: 30px;\n            border-left: 4px solid #15fdf6;\n        }\n        .instructions-box ul {\n            margin: 0;\n            padding-left: 20px;\n        }\n        .instructions-box li {\n            margin-bottom: 10px;\n            font-size: 14px;\n        }\n        .btn {\n            background-color: #15fdf6;\n            color: #1a1917;\n            text-decoration: none;\n            padding: 18px 40px;\n            font-weight: bold;\n            border-radius: 4px;\n            display: inline-block;\n            font-size: 18px;\n        }\n        .footer {\n            font-size: 11px;\n            color: #555555;\n            text-align: center;\n            padding: 20px;\n        }\n    </style>\n</head>\n<body>\n    <center class=\"wrapper\">\n        <table class=\"main\" width=\"100%\">\n            <tr>\n                <td class=\"content\">\n                    <div class=\"status-badge\">Live Now</div>\n                    <h1>It's Exam Day!</h1>\n                    \n                    <p>The moment has arrived. Your entrance examination for <span class=\"course-name\">{{ $json.Course_Selected }}</span> is now officially open.</p>\n                    \n                    <div class=\"instructions-box\">\n                        <strong style=\"color: #ffffff; display: block; margin-bottom: 10px;\">Before you start:</strong>\n                        <ul>\n                            <li>Ensure you have a stable internet connection.</li>\n                            <li>Find a quiet environment free from distractions.</li>\n                            <li>Keep your student ID and enrollment details ready.</li>\n                            <li>The exam will auto-submit once the timer runs out.</li>\n                        </ul>\n                    </div>\n\n                    <p>Click the button below to enter the portal and begin your assessment. We believe in you!</p>\n                    \n                    <div style=\"margin: 40px 0;\">\n                        <a href=\"https://docs.google.com/forms/d/e/1FAIpQLScKn0PqXmb1fYunM28kLUly9wW1-6cckvg868BOYGTMfu3zEA/viewform?usp=header\" class=\"btn\">START EXAMINATION</a>\n                    </div>\n\n                    <p style=\"font-size: 14px; color: #888;\">If you encounter any technical issues, contact support immediately.</p>\n                </td>\n            </tr>\n            <tr>\n                <td class=\"footer\">\n                    &copy; 2026 Your Academy. This link is unique to your enrollment. Do not share.\n                </td>\n            </tr>\n        </table>\n    </center>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Course"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        896,
+        384
+      ],
+      "id": "59349d20-4542-4888-b45f-65d974eaada9",
+      "name": "Exam Link",
+      "webhookId": "22673a9b-a0e5-4d71-9d89-a7da0edff563"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1IyNp4_ARuXK4nxnXOauFrGaRjy6HHcIKUSLhlbpStvs",
+          "mode": "list",
+          "cachedResultName": "Answer Sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IyNp4_ARuXK4nxnXOauFrGaRjy6HHcIKUSLhlbpStvs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1859466787,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IyNp4_ARuXK4nxnXOauFrGaRjy6HHcIKUSLhlbpStvs/edit#gid=1859466787"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -896,
+        1104
+      ],
+      "id": "45d2c320-e906-42fa-8790-2eb2fec37191",
+      "name": "G.Sheets Update"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        1296
+      ],
+      "id": "8c1bc661-98b4-4ea3-b479-f24e4618dcde",
+      "name": "AI"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Check these simple math problems and only output a score out of 10. There are 5 questionss, each correct answer is worth 2 points, totals 10.\n\n2+2= {{ $json[\"2+2\"] }}\n\n2+3= {{ $json[\"2+3\"] }}\n\n2+4= {{ $json[\"2+4\"] }}\n\n2+5= {{ $json[\"2+5\"] }}\n\n2+6= {{ $json[\"2+6\"] }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -672,
+        1104
+      ],
+      "id": "91517199-f091-4b43-acbb-c30f6ea21865",
+      "name": "Check Sheets"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1IyNp4_ARuXK4nxnXOauFrGaRjy6HHcIKUSLhlbpStvs",
+          "mode": "list",
+          "cachedResultName": "Answer Sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IyNp4_ARuXK4nxnXOauFrGaRjy6HHcIKUSLhlbpStvs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1859466787,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IyNp4_ARuXK4nxnXOauFrGaRjy6HHcIKUSLhlbpStvs/edit#gid=1859466787"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Score": "={{ $json.output }}",
+            "Email Address": "={{ $('G.Sheets Update').item.json[\"Email Address\"] }}"
+          },
+          "matchingColumns": [
+            "Email Address"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email Address",
+              "displayName": "Email Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "2+2",
+              "displayName": "2+2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "2+3",
+              "displayName": "2+3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "2+4",
+              "displayName": "2+4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "2+5",
+              "displayName": "2+5",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "2+6",
+              "displayName": "2+6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -320,
+        1104
+      ],
+      "id": "2fea555d-bef4-49ec-9305-e193b89f09ae",
+      "name": "Update Score"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1b8177f5-5de5-4882-a7e8-5bd3f6ef8a87",
+              "leftValue": "={{ $json.Score }}",
+              "rightValue": "=6",
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -96,
+        1104
+      ],
+      "id": "2beaf391-cbdd-4e2e-8d92-64ae3961bb63",
+      "name": "Pass/Fail"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('G.Sheets Update').item.json[\"Email Address\"] }}",
+        "subject": "Congratulations!!!",
+        "message": "=<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Congratulations - You Passed!</title>\n    <style>\n        body { margin: 0; padding: 0; background-color: #1a1917; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #DFDFDE; }\n        .wrapper { width: 100%; background-color: #1a1917; padding-bottom: 60px; }\n        .main { margin: 0 auto; width: 100%; max-width: 600px; border-spacing: 0; color: #DFDFDE; }\n        .content { padding: 40px 20px; text-align: center; }\n        .confetti { color: #15fdf6; font-size: 30px; margin-bottom: 10px; }\n        h1 { font-size: 32px; color: #ffffff; margin: 0 0 20px 0; }\n        .score-circle { width: 120px; height: 120px; border: 3px solid #15fdf6; border-radius: 50%; margin: 20px auto; line-height: 120px; }\n        .score-val { font-size: 36px; font-weight: bold; color: #15fdf6; }\n        p { font-size: 16px; line-height: 1.6; margin-bottom: 25px; }\n        .course-name { color: #15fdf6; font-weight: bold; }\n        .btn { background-color: #15fdf6; color: #1a1917; text-decoration: none; padding: 15px 35px; font-weight: bold; border-radius: 4px; display: inline-block; }\n        .footer { font-size: 11px; color: #555555; text-align: center; padding: 20px; }\n    </style>\n</head>\n<body>\n    <center class=\"wrapper\">\n        <table class=\"main\">\n            <tr>\n                <td class=\"content\">\n                    <div class=\"confetti\">🎉 🎊 🎉</div>\n                    <h1>Congratulations!</h1>\n                    <p>Fantastic news! You have successfully passed the examination for <span class=\"course-name\">{{ $json.Course_Selected }}</span>.</p>\n                    \n                    <div class=\"score-circle\">\n                        <span class=\"score-val\">{{ $json.Score }}</span>\n                    </div>\n                    <p style=\"margin-top: 0;\">Your Official Score</p>\n\n                    <p>Your hard work and dedication have paid off. You are now officially cleared to begin your full course journey. Click below to view your certificate and next steps.</p>\n                    \n                    <div style=\"margin: 30px 0;\">\n                        <a href=\"#\" class=\"btn\">Next Steps</a>\n                    </div>\n                </td>\n            </tr>\n            <tr><td class=\"footer\">&copy; 2026 Your Academy.</td></tr>\n        </table>\n    </center>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Course"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        128,
+        1008
+      ],
+      "id": "3aeb9585-a9df-438a-afc0-0e28da952cf7",
+      "name": "Congrats",
+      "webhookId": "7f66b835-8c48-42c9-ac13-c1588a6844c0"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('G.Sheets Update').item.json[\"Email Address\"] }}",
+        "subject": "Sorry!!!",
+        "message": "=<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Exam Results Update</title>\n    <style>\n        body { margin: 0; padding: 0; background-color: #1a1917; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #DFDFDE; }\n        .wrapper { width: 100%; background-color: #1a1917; padding-bottom: 60px; }\n        .main { margin: 0 auto; width: 100%; max-width: 600px; border-spacing: 0; color: #DFDFDE; }\n        .content { padding: 40px 20px; text-align: center; }\n        h1 { font-size: 28px; color: #ffffff; margin: 0 0 20px 0; }\n        .score-box { background-color: #242321; border-radius: 8px; padding: 20px; margin: 20px auto; width: fit-content; border: 1px solid #444; }\n        .score-val { font-size: 32px; font-weight: bold; color: #DFDFDE; }\n        p { font-size: 16px; line-height: 1.6; margin-bottom: 25px; }\n        .course-name { color: #15fdf6; font-weight: bold; }\n        .btn { background-color: #15fdf6; color: #1a1917; text-decoration: none; padding: 15px 35px; font-weight: bold; border-radius: 4px; display: inline-block; }\n        .footer { font-size: 11px; color: #555555; text-align: center; padding: 20px; }\n    </style>\n</head>\n<body>\n    <center class=\"wrapper\">\n        <table class=\"main\">\n            <tr>\n                <td class=\"content\">\n                    <h1>Your Exam Results</h1>\n                    <p>Thank you for completing the examination for <span class=\"course-name\">{{ $json.Course_Selected }}</span>.</p>\n                    \n                    <div class=\"score-box\">\n                        <span style=\"font-size: 12px; display: block; margin-bottom: 5px; color: #888;\">ACHIEVED SCORE</span>\n                        <span class=\"score-val\">{{ $json.Score }}</span>\n                    </div>\n\n                    <p>Unfortunately, you did not meet the minimum passing criteria this time. However, this is just a minor setback on your learning path.</p>\n                    \n                    <p>We highly encourage you to review the study materials and <strong>re-sit the exam</strong> when you feel ready. You can attempt the exam again via the link below:</p>\n                    \n                    <div style=\"margin: 30px 0;\">\n                        <a href=\"https://docs.google.com/forms/d/e/1FAIpQLScKn0PqXmb1fYunM28kLUly9wW1-6cckvg868BOYGTMfu3zEA/viewform?usp=header\" class=\"btn\">RE-SIT EXAMINATION</a>\n                    </div>\n\n                    <p style=\"font-size: 14px; color: #888;\">\"The expert in anything was once a beginner.\" Don't give up!</p>\n                </td>\n            </tr>\n            <tr><td class=\"footer\">&copy; 2026 Your Academy.</td></tr>\n        </table>\n    </center>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Course"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        128,
+        1200
+      ],
+      "id": "4289c6ae-7f6c-4ba2-90ba-dea3258806bb",
+      "name": "Sorry",
+      "webhookId": "9afdb6ca-41de-4509-9e80-eae47725f32c"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.data.fields[3].value[0] }}",
+                    "rightValue": "={{ $json.body.data.fields[3].options[0].id }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "9dce6895-5d32-4c65-b6b9-abc75d42e31c"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ba7050ad-0f8d-4388-8c78-a0e875c324f4",
+                    "leftValue": "={{ $json.body.data.fields[3].value[0] }}",
+                    "rightValue": "={{ $json.body.data.fields[3].options[1].id }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "18822a68-3724-4477-9eba-169a57a14e91",
+                    "leftValue": "={{ $json.body.data.fields[3].value[0] }}",
+                    "rightValue": "={{ $json.body.data.fields[3].options[2].id }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -672,
+        272
+      ],
+      "id": "91c32032-bec6-4f4a-98d3-6cba09e6054f",
+      "name": "Course A/B/C",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('25 Days Wait').item.json.Valid_Email }}",
+        "subject": "Your Exam Link is Here",
+        "message": "=<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Exam Day - Good Luck</title>\n    <style>\n        body {\n            margin: 0;\n            padding: 0;\n            background-color: #1a1917;\n            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n            color: #DFDFDE;\n            -webkit-font-smoothing: antialiased;\n        }\n        .wrapper {\n            width: 100%;\n            table-layout: fixed;\n            background-color: #1a1917;\n            padding-bottom: 60px;\n        }\n        .main {\n            background-color: #1a1917;\n            margin: 0 auto;\n            width: 100%;\n            max-width: 600px;\n            border-spacing: 0;\n            color: #DFDFDE;\n        }\n        .content {\n            padding: 40px 20px;\n            text-align: center;\n        }\n        .status-badge {\n            display: inline-block;\n            background-color: #15fdf6;\n            color: #1a1917;\n            padding: 5px 15px;\n            font-size: 12px;\n            font-weight: bold;\n            text-transform: uppercase;\n            border-radius: 20px;\n            margin-bottom: 20px;\n        }\n        h1 {\n            font-size: 32px;\n            color: #ffffff;\n            margin-top: 0;\n            margin-bottom: 20px;\n        }\n        p {\n            font-size: 16px;\n            line-height: 1.6;\n            margin-bottom: 25px;\n        }\n        .course-name {\n            color: #15fdf6;\n            font-weight: bold;\n        }\n        .instructions-box {\n            text-align: left;\n            background-color: #242321;\n            padding: 25px;\n            border-radius: 8px;\n            margin-bottom: 30px;\n            border-left: 4px solid #15fdf6;\n        }\n        .instructions-box ul {\n            margin: 0;\n            padding-left: 20px;\n        }\n        .instructions-box li {\n            margin-bottom: 10px;\n            font-size: 14px;\n        }\n        .btn {\n            background-color: #15fdf6;\n            color: #1a1917;\n            text-decoration: none;\n            padding: 18px 40px;\n            font-weight: bold;\n            border-radius: 4px;\n            display: inline-block;\n            font-size: 18px;\n        }\n        .footer {\n            font-size: 11px;\n            color: #555555;\n            text-align: center;\n            padding: 20px;\n        }\n    </style>\n</head>\n<body>\n    <center class=\"wrapper\">\n        <table class=\"main\" width=\"100%\">\n            <tr>\n                <td class=\"content\">\n                    <div class=\"status-badge\">Live Now</div>\n                    <h1>It's Exam Day!</h1>\n                    \n                    <p>The moment has arrived. Your entrance examination for <span class=\"course-name\">{{ $json.Course_Selected }}</span> is now officially open.</p>\n                    \n                    <div class=\"instructions-box\">\n                        <strong style=\"color: #ffffff; display: block; margin-bottom: 10px;\">Before you start:</strong>\n                        <ul>\n                            <li>Ensure you have a stable internet connection.</li>\n                            <li>Find a quiet environment free from distractions.</li>\n                            <li>Keep your student ID and enrollment details ready.</li>\n                            <li>The exam will auto-submit once the timer runs out.</li>\n                        </ul>\n                    </div>\n\n                    <p>Click the button below to enter the portal and begin your assessment. We believe in you!</p>\n                    \n                    <div style=\"margin: 40px 0;\">\n                        <a href=\"https://docs.google.com/forms/d/e/1FAIpQLScKn0PqXmb1fYunM28kLUly9wW1-6cckvg868BOYGTMfu3zEA/viewform?usp=header\" class=\"btn\">START EXAMINATION</a>\n                    </div>\n\n                    <p style=\"font-size: 14px; color: #888;\">If you encounter any technical issues, contact support immediately.</p>\n                </td>\n            </tr>\n            <tr>\n                <td class=\"footer\">\n                    &copy; 2026 Your Academy. This link is unique to your enrollment. Do not share.\n                </td>\n            </tr>\n        </table>\n    </center>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Course"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        896,
+        576
+      ],
+      "id": "9074a308-25f0-4bca-8f36-5b93c27e561e",
+      "name": "Exam Link1",
+      "webhookId": "22673a9b-a0e5-4d71-9d89-a7da0edff563"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('25 Days Wait').item.json.Valid_Email }}",
+        "subject": "Your Exam Link is Here",
+        "message": "=<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Exam Day - Good Luck</title>\n    <style>\n        body {\n            margin: 0;\n            padding: 0;\n            background-color: #1a1917;\n            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n            color: #DFDFDE;\n            -webkit-font-smoothing: antialiased;\n        }\n        .wrapper {\n            width: 100%;\n            table-layout: fixed;\n            background-color: #1a1917;\n            padding-bottom: 60px;\n        }\n        .main {\n            background-color: #1a1917;\n            margin: 0 auto;\n            width: 100%;\n            max-width: 600px;\n            border-spacing: 0;\n            color: #DFDFDE;\n        }\n        .content {\n            padding: 40px 20px;\n            text-align: center;\n        }\n        .status-badge {\n            display: inline-block;\n            background-color: #15fdf6;\n            color: #1a1917;\n            padding: 5px 15px;\n            font-size: 12px;\n            font-weight: bold;\n            text-transform: uppercase;\n            border-radius: 20px;\n            margin-bottom: 20px;\n        }\n        h1 {\n            font-size: 32px;\n            color: #ffffff;\n            margin-top: 0;\n            margin-bottom: 20px;\n        }\n        p {\n            font-size: 16px;\n            line-height: 1.6;\n            margin-bottom: 25px;\n        }\n        .course-name {\n            color: #15fdf6;\n            font-weight: bold;\n        }\n        .instructions-box {\n            text-align: left;\n            background-color: #242321;\n            padding: 25px;\n            border-radius: 8px;\n            margin-bottom: 30px;\n            border-left: 4px solid #15fdf6;\n        }\n        .instructions-box ul {\n            margin: 0;\n            padding-left: 20px;\n        }\n        .instructions-box li {\n            margin-bottom: 10px;\n            font-size: 14px;\n        }\n        .btn {\n            background-color: #15fdf6;\n            color: #1a1917;\n            text-decoration: none;\n            padding: 18px 40px;\n            font-weight: bold;\n            border-radius: 4px;\n            display: inline-block;\n            font-size: 18px;\n        }\n        .footer {\n            font-size: 11px;\n            color: #555555;\n            text-align: center;\n            padding: 20px;\n        }\n    </style>\n</head>\n<body>\n    <center class=\"wrapper\">\n        <table class=\"main\" width=\"100%\">\n            <tr>\n                <td class=\"content\">\n                    <div class=\"status-badge\">Live Now</div>\n                    <h1>It's Exam Day!</h1>\n                    \n                    <p>The moment has arrived. Your entrance examination for <span class=\"course-name\">{{ $json.Course_Selected }}</span> is now officially open.</p>\n                    \n                    <div class=\"instructions-box\">\n                        <strong style=\"color: #ffffff; display: block; margin-bottom: 10px;\">Before you start:</strong>\n                        <ul>\n                            <li>Ensure you have a stable internet connection.</li>\n                            <li>Find a quiet environment free from distractions.</li>\n                            <li>Keep your student ID and enrollment details ready.</li>\n                            <li>The exam will auto-submit once the timer runs out.</li>\n                        </ul>\n                    </div>\n\n                    <p>Click the button below to enter the portal and begin your assessment. We believe in you!</p>\n                    \n                    <div style=\"margin: 40px 0;\">\n                        <a href=\"https://docs.google.com/forms/d/e/1FAIpQLScKn0PqXmb1fYunM28kLUly9wW1-6cckvg868BOYGTMfu3zEA/viewform?usp=header\" class=\"btn\">START EXAMINATION</a>\n                    </div>\n\n                    <p style=\"font-size: 14px; color: #888;\">If you encounter any technical issues, contact support immediately.</p>\n                </td>\n            </tr>\n            <tr>\n                <td class=\"footer\">\n                    &copy; 2026 Your Academy. This link is unique to your enrollment. Do not share.\n                </td>\n            </tr>\n        </table>\n    </center>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Course"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        896,
+        768
+      ],
+      "id": "cdd816ac-a14c-48e2-bc11-d243ab63b773",
+      "name": "Exam Link2",
+      "webhookId": "22673a9b-a0e5-4d71-9d89-a7da0edff563"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "form_test",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -896,
+        288
+      ],
+      "id": "1603634d-fa28-43a5-a4c2-47e18a3d8e36",
+      "name": "Form",
+      "webhookId": "497d39e4-a30c-486a-9f00-ffe07100bbe4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2528644f-f17e-410e-b71b-aa81a6a602b8",
+              "name": "Course_Selected",
+              "value": "Course A",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -448,
+        96
+      ],
+      "id": "5555b5ce-5e03-460c-a85b-5a57d1403a32",
+      "name": "Course A"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "943d23dd-b48d-4833-b368-ee8c455df16a",
+              "name": "Course_Selected",
+              "value": "Course B",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -448,
+        288
+      ],
+      "id": "996082bf-f22a-44ad-81f6-d98fe57a881d",
+      "name": "Course B"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cb75e3b4-87c6-443b-bffd-bb4ad54e77d0",
+              "name": "Course_Selected",
+              "value": "Course C",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -448,
+        480
+      ],
+      "id": "8a708260-7aa7-4432-98cc-48dd443a7633",
+      "name": "Course C"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('25 Days Wait').item.json.Course_Selected }}",
+                    "rightValue": "Course A",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "9dce6895-5d32-4c65-b6b9-abc75d42e31c"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ba7050ad-0f8d-4388-8c78-a0e875c324f4",
+                    "leftValue": "={{ $('25 Days Wait').item.json.Course_Selected }}",
+                    "rightValue": "=Course B",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "18822a68-3724-4477-9eba-169a57a14e91",
+                    "leftValue": "={{ $('25 Days Wait').item.json.Course_Selected }}",
+                    "rightValue": "=Course C",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        560
+      ],
+      "id": "e439ec31-42aa-428c-a5fe-9e7b836de5f6",
+      "name": "Course A/B/C1",
+      "alwaysOutputData": false
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Formatting": {
+      "main": [
+        [
+          {
+            "node": "Data Saved",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Welcome Email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Admin Notified",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "25 Days Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reminder": {
+      "main": [
+        [
+          {
+            "node": "5 Days Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "25 Days Wait": {
+      "main": [
+        [
+          {
+            "node": "Reminder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5 Days Wait": {
+      "main": [
+        [
+          {
+            "node": "Course A/B/C1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "G.Sheets Update": {
+      "main": [
+        [
+          {
+            "node": "Check Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Check Sheets",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Sheets": {
+      "main": [
+        [
+          {
+            "node": "Update Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Score": {
+      "main": [
+        [
+          {
+            "node": "Pass/Fail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pass/Fail": {
+      "main": [
+        [
+          {
+            "node": "Congrats",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sorry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Course A/B/C": {
+      "main": [
+        [
+          {
+            "node": "Course A",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Course B",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Course C",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form": {
+      "main": [
+        [
+          {
+            "node": "Course A/B/C",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Course A": {
+      "main": [
+        [
+          {
+            "node": "Formatting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Course B": {
+      "main": [
+        [
+          {
+            "node": "Formatting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Course C": {
+      "main": [
+        [
+          {
+            "node": "Formatting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Course A/B/C1": {
+      "main": [
+        [
+          {
+            "node": "Exam Link",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Exam Link1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Exam Link2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "801355fa-4428-4d03-8551-6f37b37d0bbd",
+  "meta": {
+    "instanceId": "a8c40d59464c37cd2053a040e4bf075f84ad03805d6400adb5e8c6da8cfdfcd6"
+  },
+  "nodeGroups": [],
+  "id": "fcf126aR5QKEmUpB",
+  "tags": []
+}
