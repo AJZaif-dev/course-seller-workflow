@@ -1,3 +1,6 @@
+<img width="1366" height="685" alt="course seller workflow" src="https://github.com/user-attachments/assets/b01fbfc1-63a4-4758-9bf0-ede8f8bdb822" />
+<img width="1366" height="685" alt="course seller workflow" src="https://github.com/user-attachments/assets/30bde6d3-f7af-4f05-977d-03343893389f" />
+
 # End-to-End Automated Course Delivery & AI Grading Engine
 
 A complete, zero-touch backend infrastructure for online academies and digital info-products. This system handles the entire student lifecycle: from form-based onboarding and course routing, to timed email drip campaigns, automated exam distribution, and instantaneous LLM-powered test grading.
